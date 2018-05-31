@@ -34,6 +34,3 @@ def create_app(config=None):
             app.config.from_pyfile(config)
     return app
 
-
-def test():
-    pass

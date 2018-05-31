@@ -11,5 +11,10 @@ local.properties
 node_modules/
 npm-debug.log
 
+__pycache__/
+
+/__pycache__/
+
+
 
 

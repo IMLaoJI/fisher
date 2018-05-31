@@ -50,6 +50,8 @@ class YuShuBook:
         self.books = data['books']
 
 
+
+# 伪类 不是面向对象思想  每个函数都只是返回给调用方数据 而没有存储在类对象当中
 class YuShuBookOld:
     """
         鱼书API提供数据

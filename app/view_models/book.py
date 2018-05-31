@@ -1,6 +1,7 @@
 from app.libs.helper import get_isbn
 
 
+# 表示单本书籍的模型
 class BookViewModel:
     def __init__(self, data):
         # if not isinstance(data, dict):V
@@ -24,7 +25,7 @@ class BookViewModel:
                         [self.author, self.publisher, self.price])
         return ' / '.join(intros)
 
-
+# 书本集合处理模型
 class BookCollection:
     def __init__(self):
         self.total = 0
@@ -46,7 +47,7 @@ class BookViewModelOld:
             data 有三种情况：
             1. 单本
             2. 空对象
-            3. 有对象
+            3. 多对象
         '''
         # if not data:
 
@@ -121,3 +122,62 @@ class BookViewModelOld:
         #     isbn13 = book.get('isbn13', None)
         #     isbn10 = book.get('isbn10', None)
         #     return isbn13 if isbn13 else (isbn10 if isbn10 else '')
+
+
+# 根本没用到python面向对象。简单的堆叠一些函数 面向过程编程
+# 类包括
+# 描述特征 (类变量、实例变量)
+# 行为 (方法)
+class _BookViewModel:
+    @classmethod
+    def package_single(cls, data, keyword):
+        returned = {
+            'books': [],
+            'total': 0,
+            'keyword': keyword
+        }
+        if data:
+            returned['total'] = 1
+            returned['books'] = [cls._cut_book_data(data)]
+        return returned
+
+    @classmethod
+    def package_collection(cls, data, keyword):
+        returned = {
+            'books': [],
+            'total': 0,
+            'keyword': keyword
+        }
+        if data:
+            returned['total'] = data['total']
+            returned['books'] = [cls._cut_book_data(book) for book in data['books']]
+        return returned
+
+    @classmethod
+    def _cut_book_data(cls, data):
+        book = {
+            'title': data['title'],
+            'publisher': data['publisher'],
+            'pages': data['pages'] or '',
+            'author': '、'.join(['author']),
+            'price': data['price'],
+            'summary': data['summary'] or '',
+            'image': data['image']
+        }
+        return book
+
+    @classmethod
+    def _cut_books_data(cls, data):
+        books = []
+        for book in data['books']:
+            r = {
+                'title': book['title'],
+                'publisher': book['publisher'],
+                'pages': book['pages'],
+                'author': '、'.join(book['author']),
+                'price': book['price'],
+                'summary': book['summary'],
+                'image': book['image']
+            }
+            books.append(r)
+        return books
